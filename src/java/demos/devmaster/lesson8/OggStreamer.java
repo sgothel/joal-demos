@@ -38,10 +38,10 @@ import java.io.File;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
-import net.java.games.joal.AL;
-import net.java.games.joal.ALException;
-import net.java.games.joal.ALFactory;
-import net.java.games.joal.util.ALut;
+import com.jogamp.openal.AL;
+import com.jogamp.openal.ALException;
+import com.jogamp.openal.ALFactory;
+import com.jogamp.openal.util.ALut;
 /**
  *
  * This is a translation of the OggVorbis streamer OpenAL tutorial 

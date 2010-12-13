@@ -10,11 +10,29 @@
    - built into its build directory.
    -->
 <project name="JOAL.demos" default="all">
-  <condition property="rootrel.build" value="build">
+    <property name="joal-demos_base_version" value="2.0"/>
+    <tstamp>
+       <format property="version.timestamp" pattern="yyyyMMdd"/>
+    </tstamp>
+    <property name="joal-demos.version" value="${joal-demos_base_version}-${version.timestamp}" />
+
+    <property name="project.root"  value=".." />
+
+    <condition property="rootrel.build" value="build">
       <not>
           <isset property="rootrel.build"/>
       </not>
-  </condition>
+    </condition>
+    <property name="build" location="${project.root}/${rootrel.build}" />
+
+    <property name="gluegen.root"  value="${project.root}/../gluegen" />
+    <property name="gluegen.build" value="${gluegen.root}/${rootrel.build}" />
+
+    <property file="${build}/artifact.properties"/>
+    <property name="joal-demos.build.number" value="manual-build"/>
+    <property name="joal-demos.build.id"     value="${version.timestamp}"/>
+    <property name="joal-demos.build.branch" value="master"/>
+    <property name="joal-demos.build.commit" value="manual"/>
 
     <!-- 
        - Make sure that joal-demos.jar is not on the CLASSPATH; this can
@@ -39,22 +57,49 @@
     <target name="init" depends="java.class.path.validate">
         <property name="joal.jar"            value="../../joal/${rootrel.build}/joal.jar" />
 
-        <property name="build.dir"           value="../${rootrel.build}" />
         <property name="src.dir"             value="../src" />
-        <property name="classes.dir"         value="${build.dir}/classes" />
-        <property name="joal.demos.jar"      value="${build.dir}/joal-demos.jar" />
-        <property name="joal.demos.src.zip"  value="${build.dir}/joal-demos-src.zip" />
+        <property name="classes.dir"         value="${build}/classes" />
+        <property name="joal.demos.jar"      value="${build}/joal-demos.jar" />
+        <property name="joal.demos.src.zip"  value="${build}/joal-demos-src.zip" />
+
+        <property name="archive.name"        value="joal-demos-${joal-demos.version}" />
+        <property name="archive"             value="${build}/${archive.name}" />
     </target>
 
-    <target name="all" depends="jar" description="Build everything">
+    <target name="all" depends="jar, tag.build, developer-zip-archive"/>
 
-	<!-- Build a source archive as well -->
-        <delete file="${joal.demos.src.zip}" />
-        <zip destfile="${joal.demos.src.zip}"
-	     basedir="../.."
-	     includes="joal-demos/make/**,joal-demos/src/**"
-	     excludes="**/*.class,**/*~"
-	     />
+    <!-- Build binary zip archives for developers -->
+    <target name="developer-zip-archive" depends="init" unless="build.noarchives">
+        <!-- Clean up and create temporary directory -->
+        <delete includeEmptyDirs="true" quiet="true" dir="${archive}" failonerror="false" />
+        <mkdir dir="${archive}" />
+        <copy file="${build}/artifact.properties" todir="${archive}"/>
+        <mkdir dir="${archive}/jar" />
+        <copy todir="${archive}/jar">
+            <fileset dir="${build}" includes="*.jar"/>
+        </copy>
+        <mkdir dir="${archive}/jnlp-files" />
+        <copy todir="${archive}/jnlp-files">
+            <fileset dir="${project.root}/jnlp-files" includes="*" />
+        </copy>
+        <mkdir dir="${archive}/www" />
+        <copy todir="${archive}/www">
+            <fileset dir="${project.root}/www" includes="*" />
+        </copy>
+        <delete quiet="true" file="${build}/${archive.name}.zip"/>
+        <zip destfile="${build}/${archive.name}.zip"
+             basedir="${build}"
+             includes="${archive.name}/**" />
+        <!-- Clean up after ourselves -->
+        <delete includeEmptyDirs="true" quiet="true" dir="${archive}" failonerror="false" />
+    </target>
+
+    <target name="tag.build">
+        <copy file="${gluegen.build}/artifact.properties" todir="${build}" overwrite="true"/>
+        <echo message='joal-demos.build.number=${joal-demos.build.number}${line.separator}' file="${build}/artifact.properties" append="true"/>
+        <echo message='joal-demos.build.id=${joal-demos.build.id}${line.separator}'         file="${build}/artifact.properties" append="true"/>
+        <echo message='joal-demos.build.branch=${joal-demos.build.branch}${line.separator}' file="${build}/artifact.properties" append="true"/>
+        <echo message='joal-demos.build.commit=${joal-demos.build.commit}${line.separator}' file="${build}/artifact.properties" append="true"/>
     </target>
 
     <target name="jar" depends="compile" description="Build JOAL demos jar file">
@@ -69,15 +114,15 @@
     <target name="compile" depends="init">
         <mkdir dir="${classes.dir}" />
 
-        <copy todir="${build.dir}">
-	    <fileset dir="${src.dir}/java/demos/lib" includes="j-ogg-*.jar" />
-	</copy>
+        <copy todir="${build}">
+            <fileset dir="${src.dir}/java/demos/lib" includes="j-ogg-*.jar" />
+        </copy>
 
         <path id="joal.classpath">
             <pathelement path="${classpath}" />
             <pathelement location="${joal.jar}" />
-            <pathelement location="${build.dir}/j-ogg-oggd.jar" />
-            <pathelement location="${build.dir}/j-ogg-vorbisd.jar" />
+            <pathelement location="${build}/j-ogg-oggd.jar" />
+            <pathelement location="${build}/j-ogg-vorbisd.jar" />
         </path>
         <javac destdir="${classes.dir}" source="1.4" debug="true" debuglevel="source,lines">
             <src path="${src.dir}" />
@@ -94,8 +139,8 @@
     <target name="lesson1" depends="jar" description="Run lesson1 (Single Static Source)">
         <java classname="demos.devmaster.lesson1.SingleStaticSource" fork="true">
             <classpath>
-		<pathelement location="${joal.jar}" />
-		<pathelement location="${joal.demos.jar}" />
+                <pathelement location="${joal.jar}" />
+                <pathelement location="${joal.demos.jar}" />
             </classpath>
         </java>
     </target>
@@ -103,8 +148,8 @@
     <target name="lesson2" depends="jar" description="Run lesson2 (Looping and Fade Away)">
         <java classname="demos.devmaster.lesson2.LoopingAndFadeaway" fork="true">
             <classpath>
-		<pathelement location="${joal.jar}" />
-		<pathelement location="${joal.demos.jar}" />
+                <pathelement location="${joal.jar}" />
+                <pathelement location="${joal.demos.jar}" />
             </classpath>
         </java>
     </target>
@@ -112,8 +157,8 @@
     <target name="lesson3" depends="jar" description="Run lesson3 (Multiple Sources)">
         <java classname="demos.devmaster.lesson3.MultipleSources" fork="true">
             <classpath>
-		<pathelement location="${joal.jar}" />
-		<pathelement location="${joal.demos.jar}" />
+                <pathelement location="${joal.jar}" />
+                <pathelement location="${joal.demos.jar}" />
             </classpath>
         </java>
     </target>
@@ -121,8 +166,8 @@
     <target name="lesson5" depends="jar" description="Run lesson5 (Sources Sharing Buffers)">
         <java classname="demos.devmaster.lesson5.SourcesSharingBuffers" fork="true">
             <classpath>
-		<pathelement location="${joal.jar}" />
-		<pathelement location="${joal.demos.jar}" />
+                <pathelement location="${joal.jar}" />
+                <pathelement location="${joal.demos.jar}" />
             </classpath>
         </java>
     </target>
@@ -130,11 +175,12 @@
     <target name="lesson8" depends="jar" description="Run lesson8 (Ogg/Vorbis Streaming)">
         <java classname="demos.devmaster.lesson8.OggStreamer" fork="true">
             <classpath>
-		<pathelement location="${joal.jar}" />
-		<pathelement location="${joal.demos.jar}" />
-		<pathelement location="${build.dir}/j-ogg-oggd.jar" />
-		<pathelement location="${build.dir}/j-ogg-vorbisd.jar" />
+                <pathelement location="${joal.jar}" />
+                <pathelement location="${joal.demos.jar}" />
+                <pathelement location="${build}/j-ogg-oggd.jar" />
+                <pathelement location="${build}/j-ogg-vorbisd.jar" />
             </classpath>
         </java>
     </target>
  </project>
+

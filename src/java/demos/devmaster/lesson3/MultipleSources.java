@@ -37,8 +37,8 @@ package demos.devmaster.lesson3;
 import java.nio.ByteBuffer;
 import java.util.Random;
 
-import net.java.games.joal.*;
-import net.java.games.joal.util.*;
+import com.jogamp.openal.*;
+import com.jogamp.openal.util.*;
 
 /**
  * Adapted from <a href="http://www.devmaster.net/">DevMaster</a>

@@ -1,12 +1,12 @@
 package demos.efx;
 
-import net.java.games.joal.AL;
-import net.java.games.joal.ALC;
-import net.java.games.joal.ALCcontext;
-import net.java.games.joal.ALCdevice;
-import net.java.games.joal.ALFactory;
-import net.java.games.joal.util.WAVData;
-import net.java.games.joal.util.WAVLoader;
+import com.jogamp.openal.AL;
+import com.jogamp.openal.ALC;
+import com.jogamp.openal.ALCcontext;
+import com.jogamp.openal.ALCdevice;
+import com.jogamp.openal.ALFactory;
+import com.jogamp.openal.util.WAVData;
+import com.jogamp.openal.util.WAVLoader;
 
 /**
  * OpenAL 1.1 EFX test class, a translation of the C++ EFXFilter demo from the

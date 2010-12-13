@@ -37,8 +37,8 @@ package demos.devmaster.lesson2;
 import java.io.*;
 import java.nio.*;
 
-import net.java.games.joal.*;
-import net.java.games.joal.util.*;
+import com.jogamp.openal.*;
+import com.jogamp.openal.util.*;
 
 /**
  * Adapted from <a href="http://www.devmaster.net/">DevMaster</a>

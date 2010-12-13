@@ -44,8 +44,8 @@ import java.awt.event.*;
 import javax.swing.*;
 
 
-import net.java.games.joal.*;
-import net.java.games.joal.util.*;
+import com.jogamp.openal.*;
+import com.jogamp.openal.util.*;
 
 /**
  * Adapted from <a href="http://www.devmaster.net/">DevMaster</a>

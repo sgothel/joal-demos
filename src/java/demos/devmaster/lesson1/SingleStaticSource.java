@@ -37,8 +37,8 @@ package demos.devmaster.lesson1;
 import java.io.*;
 import java.nio.ByteBuffer;
 
-import net.java.games.joal.*;
-import net.java.games.joal.util.*;
+import com.jogamp.openal.*;
+import com.jogamp.openal.util.*;
 
 // For the GUI
 import java.awt.*;
