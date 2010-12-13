@@ -10,6 +10,12 @@
    - built into its build directory.
    -->
 <project name="JOAL.demos" default="all">
+  <condition property="rootrel.build" value="build">
+      <not>
+          <isset property="rootrel.build"/>
+      </not>
+  </condition>
+
     <!-- 
        - Make sure that joal-demos.jar is not on the CLASSPATH; this can
        - cause builds to fail since if this Java process has the jar file
@@ -31,9 +37,9 @@
     </target>
 
     <target name="init" depends="java.class.path.validate">
-        <property name="joal.jar"            value="../../joal/build/joal.jar" />
+        <property name="joal.jar"            value="../../joal/${rootrel.build}/joal.jar" />
 
-        <property name="build.dir"           value="../build" />
+        <property name="build.dir"           value="../${rootrel.build}" />
         <property name="src.dir"             value="../src" />
         <property name="classes.dir"         value="${build.dir}/classes" />
         <property name="joal.demos.jar"      value="${build.dir}/joal-demos.jar" />
@@ -81,7 +87,7 @@
 
     <target name="clean" depends="init">
         <delete includeEmptyDirs="true" quiet="true">
-            <fileset dir="../build" />
+            <fileset dir="../${rootrel.build}" />
         </delete>
     </target>
 
