@@ -80,7 +80,7 @@
     <target name="all" depends="jar, tag.build, developer-zip-archive"/>
 
     <!-- Build binary zip archives for developers -->
-    <target name="developer-zip-archive" depends="init" unless="build.noarchives">
+    <target name="developer-zip-archive" depends="init" if="build.archiveon">
         <!-- Clean up and create temporary directory -->
         <delete includeEmptyDirs="true" quiet="true" dir="${archive}" failonerror="false" />
         <mkdir dir="${archive}" />
