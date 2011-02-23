@@ -29,6 +29,7 @@
     <property name="gluegen.build" value="${gluegen.root}/${rootrel.build}" />
     <!-- Pull in GlueGen cpptasks build file -->
     <import file="${gluegen.root}/make/gluegen-cpptasks.xml" />
+    <import file="${gluegen.root}/make/gluegen-archivetasks.xml" />
 
     <property name="joal.root"     value="${project.root}/../joal" />
     <property name="joal.build"    value="${joal.root}/${rootrel.build}" />
@@ -69,7 +70,6 @@
         <property name="src.dir"             value="../src" />
         <property name="classes.dir"         value="${build}/classes" />
         <property name="joal.demos.jar"      value="${build}/joal-demos.jar" />
-        <property name="joal.demos.src.zip"  value="${build}/joal-demos-src.zip" />
 
         <property name="archive.name"        value="joal-demos-${joal-demos.version}-${os.and.arch}" />
         <property name="archive"             value="${build}/${archive.name}" />
@@ -97,8 +97,7 @@
         <copy todir="${archive}/www">
             <fileset dir="${project.root}/www" includes="*" />
         </copy>
-        <delete quiet="true" file="${build}/${archive.name}.zip"/>
-        <zip destfile="${build}/${archive.name}.zip"
+        <archive.7z destfile="${build}/${archive.name}.7z"
              basedir="${build}"
              includes="${archive.name}/**" />
         <!-- Clean up after ourselves -->
