@@ -30,6 +30,7 @@
     <!-- Pull in GlueGen cpptasks build file -->
     <import file="${gluegen.root}/make/gluegen-cpptasks.xml" />
     <import file="${gluegen.root}/make/gluegen-archivetasks.xml" />
+    <import file="${gluegen.root}/make/jogamp-env.xml" />
 
     <property name="joal.root"     value="${project.root}/../joal" />
     <property name="joal.build"    value="${joal.root}/${rootrel.build}" />
@@ -39,9 +40,6 @@
     <property name="joal-demos.build.id"     value="${version.timestamp}"/>
     <property name="joal-demos.build.branch" value="master"/>
     <property name="joal-demos.build.commit" value="manual"/>
-
-    <!-- Pull in GlueGen cpptasks build file -->
-    <import file="${gluegen.root}/make/gluegen-cpptasks.xml" />
 
     <!-- 
        - Make sure that joal-demos.jar is not on the CLASSPATH; this can
@@ -63,7 +61,7 @@
         </fail>
     </target>
 
-    <target name="init" depends="gluegen.cpptasks.detect.os, java.class.path.validate, gluegen.cpptasks.detect.os">
+    <target name="init" depends="jogamp.env.init, gluegen.cpptasks.detect.os, java.class.path.validate, gluegen.cpptasks.detect.os">
         <property name="gluegen-rt.jar"      value="${gluegen.build}/gluegen-rt.jar" />
         <property name="joal.jar"            value="${joal.build}/joal.jar" />
 
