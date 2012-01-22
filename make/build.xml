@@ -132,7 +132,13 @@
             <pathelement location="${build}/j-ogg-oggd.jar" />
             <pathelement location="${build}/j-ogg-vorbisd.jar" />
         </path>
-        <javac destdir="${classes.dir}" source="1.4" debug="true" debuglevel="source,lines">
+        <javac destdir="${classes.dir}" 
+               includeantruntime="false"
+               memoryMaximumSize="${javac.memorymax}"
+               source="${target.sourcelevel}" 
+               target="${target.targetlevel}" 
+               bootclasspath="${target.rt.jar}"
+               debug="${javacdebug}" debuglevel="${javacdebuglevel}">
             <src path="${src.dir}" />
             <classpath refid="joal.classpath" />
         </javac>
