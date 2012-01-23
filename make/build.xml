@@ -135,6 +135,7 @@
         <javac destdir="${classes.dir}" 
                includeantruntime="false"
                memoryMaximumSize="${javac.memorymax}"
+               encoding="UTF-8"
                source="${target.sourcelevel}" 
                target="${target.targetlevel}" 
                bootclasspath="${target.rt.jar}"
