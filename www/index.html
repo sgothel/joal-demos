@@ -19,7 +19,7 @@
                     <li><a href="../../jogl/www">JOGL</a></li>
                     <!--<li><a href="../../jogl-demos/www">Demos</a></li>
                     <li><a href="../../wiki/index.php/Jogl_FAQ">Wiki</a></li>-->
-                    <li><a href="http://download.java.net/media/joal/builds/nightly/javadoc_public/">JavaDoc</a></li>
+                    <li><a href="http://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/">JavaDoc</a></li>
                 </ul>
             </div>
             <div id="main" class="fill">
@@ -45,6 +45,34 @@
                                                             demonstrations illustred the features and usage of the Java
                                                             bindings for OpenAL API and the Sound3D Toolkit.
                                                         </p>
+                                                        <H3> JOAL from command-line </H3>
+                                                        <pre>
+wget https://jogamp.org/deployment/jogamp-current/archive/jogamp-all-platforms.7z
+7z x jogamp-all-platforms.7z
+cd jogamp-all-platforms
+
+# joal-test 
+java -cp jar/joal-test.jar:jar/joal.jar:jar/gluegen-rt.jar com.jogamp.openal.Sound3DTest
+java -cp jar/joal-test.jar:jar/joal.jar:jar/gluegen-rt.jar com.jogamp.openal.test.manual.OpenALTest
+
+# joal-demos www.devmaster.net Tutorial lession 1,2,3 &amp; 5
+wget https://jogamp.org/deployment/jogamp-current/joal-demos/jar/joal-demos.jar
+java -cp joal-demos.jar:jar/joal.jar:jar/gluegen-rt.jar demos.devmaster.lesson1.SingleStaticSource
+java -cp joal-demos.jar:jar/joal.jar:jar/gluegen-rt.jar demos.devmaster.lesson2.LoopingAndFadeaway
+java -cp joal-demos.jar:jar/joal.jar:jar/gluegen-rt.jar demos.devmaster.lesson3.MultipleSources
+java -cp joal-demos.jar:jar/joal.jar:jar/gluegen-rt.jar demos.devmaster.lesson5.SourcesSharingBuffers
+
+# joal-demos www.devmaster.net Tutorial lession 8 
+wget https://jogamp.org/deployment/jogamp-current/joal-demos/jar/j-ogg-oggd.jar
+wget https://jogamp.org/deployment/jogamp-current/joal-demos/jar/j-ogg-vorbisd.jar
+java -cp joal-demos.jar:j-ogg-oggd.jar:jar/joal.jar:jar/gluegen-rt.jar demos.devmaster.lesson8.OggDecoder
+java -cp joal-demos.jar:j-ogg-oggd.jar:jar/joal.jar:jar/gluegen-rt.jar demos.devmaster.lesson8.OggStreamer
+                                                        </pre>
+                                                        <H3> JOAL/JOGL test applets </H3>
+                                                        <ul>
+                                                            <li><a href="https://jogamp.org/deployment/jogamp-current/jogl-demos/applet-gearsjoal.html">JOGL/JOAL Applet test</a></li>
+                                                            <li><a href="https://jogamp.org/deployment/jogamp-current/jogl-demos/applet-gearsjoal-launcheronly.html">JOGL/JOAL Applet test (Launcher Only)</a></li>
+                                                        </ul>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -77,7 +105,7 @@
                                                         <li><a href="devmaster/lesson6.html">lesson 6:</a>Advanced Loading and Error Handles.</li>
                                                         <li><a href="devmaster/lesson7.html">lesson 7:</a>The Doppler Effect</li>
                                                         <li><a href="devmaster/lesson8.html">lesson 8:</a> Ogg/Vorbis Streaming</li>
-                                                        <li><a href="devmaster/OpenAL_Tutorials_Bundle.zip">source for lessons 1,2,3 &amp; 5</a></li>
+                                                        <li><a href="https://github.com/JogAmp/joal-demos/tree/master/src/java/demos/devmaster">source for lessons 1,2,3,5 &amp; 8</a></li>
                                                     </ul>
                                                 </td>
                                             </tr>
