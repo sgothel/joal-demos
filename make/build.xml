@@ -65,7 +65,7 @@
         <property name="gluegen-rt.jar"      value="${gluegen.build}/gluegen-rt.jar" />
         <property name="joal.jar"            value="${joal.build}/joal.jar" />
 
-        <property name="src.dir"             value="../src" />
+        <property name="src.dir"             value="../src/java" />
         <property name="classes.dir"         value="${build}/classes" />
         <property name="joal.demos.jar"      value="${build}/joal-demos.jar" />
 
@@ -113,7 +113,7 @@
     <target name="jar" depends="compile" description="Build JOAL demos jar file">
         <jar destfile="${joal.demos.jar}">
             <fileset dir="${classes.dir}" />
-            <fileset dir="${src.dir}/java">
+            <fileset dir="${src.dir}">
                <include name="demos/data/**" />
             </fileset>
         </jar>
@@ -123,7 +123,7 @@
         <mkdir dir="${classes.dir}" />
 
         <copy todir="${build}">
-            <fileset dir="${src.dir}/java/demos/lib" includes="j-ogg-*.jar" />
+            <fileset dir="${src.dir}/demos/lib" includes="j-ogg-*.jar" />
         </copy>
 
         <path id="joal.classpath">

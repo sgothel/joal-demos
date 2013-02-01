@@ -4,6 +4,7 @@ import com.jogamp.openal.AL;
 import com.jogamp.openal.ALC;
 import com.jogamp.openal.ALCcontext;
 import com.jogamp.openal.ALCdevice;
+import com.jogamp.openal.ALExt;
 import com.jogamp.openal.ALFactory;
 import com.jogamp.openal.util.WAVData;
 import com.jogamp.openal.util.WAVLoader;
@@ -20,6 +21,7 @@ public class EFXFilter {
     private static ALCcontext context;
     private static ALC alc;
     private static AL al;
+    private static ALExt alExt;
 
     private static String wavefile = "demos/data/Footsteps.wav";
 
@@ -86,6 +88,7 @@ public class EFXFilter {
         alc.alcMakeContextCurrent(context);
 
         al = ALFactory.getAL();
+        alExt = ALFactory.getALExt();
     }
 
     /**
@@ -122,13 +125,13 @@ public class EFXFilter {
         System.out.println("Source played through a direct lowpass filter");
 
         // Attach a lowpass filter to the source
-        int filter = createFilter(AL.AL_FILTER_LOWPASS, 1f, 0.5f);
-        al.alSourcei(source, AL.AL_DIRECT_FILTER, filter);
+        int filter = createFilter(ALExt.AL_FILTER_LOWPASS, 1f, 0.5f);
+        al.alSourcei(source, ALExt.AL_DIRECT_FILTER, filter);
 
         play(source);
 
         // Cleanup
-        al.alSourcei(source, AL.AL_DIRECT_FILTER, AL.AL_FILTER_NULL);
+        al.alSourcei(source, ALExt.AL_DIRECT_FILTER, ALExt.AL_FILTER_NULL);
         deleteFilter(filter);
     }
 
@@ -143,23 +146,23 @@ public class EFXFilter {
 
         // Create auxiliary effect slots & effects
         int[] effectslots = new int[1];
-        al.alGenAuxiliaryEffectSlots(1, effectslots, 0);
+        alExt.alGenAuxiliaryEffectSlots(1, effectslots, 0);
         int[] effects = new int[1];
-        al.alGenEffects(1, effects, 0);
+        alExt.alGenEffects(1, effects, 0);
 
         // Configure the effect to be a reverb, load it to the effect slot
-        al.alEffecti(effects[0], AL.AL_EFFECT_TYPE, AL.AL_EFFECT_REVERB);
-        al.alAuxiliaryEffectSloti(effectslots[0], AL.AL_EFFECTSLOT_EFFECT, effects[0]);
+        alExt.alEffecti(effects[0], ALExt.AL_EFFECT_TYPE, ALExt.AL_EFFECT_REVERB);
+        alExt.alAuxiliaryEffectSloti(effectslots[0], ALExt.AL_EFFECTSLOT_EFFECT, effects[0]);
 
         // Enable Send 0 from the Source to the Auxiliary Effect Slot without filtering
-        al.alSource3i(source, AL.AL_AUXILIARY_SEND_FILTER, effectslots[0], 0, AL.AL_FILTER_NULL);
+        al.alSource3i(source, ALExt.AL_AUXILIARY_SEND_FILTER, effectslots[0], 0, ALExt.AL_FILTER_NULL);
 
         play(source);
 
         // Cleanup
-        al.alSource3i(source, AL.AL_AUXILIARY_SEND_FILTER, AL.AL_EFFECTSLOT_NULL, 0, AL.AL_FILTER_NULL);
-        al.alDeleteAuxiliaryEffectSlots(1, effectslots, 0);
-        al.alDeleteEffects(1, effects, 0);
+        al.alSource3i(source, ALExt.AL_AUXILIARY_SEND_FILTER, ALExt.AL_EFFECTSLOT_NULL, 0, ALExt.AL_FILTER_NULL);
+        alExt.alDeleteAuxiliaryEffectSlots(1, effectslots, 0);
+        alExt.alDeleteEffects(1, effects, 0);
     }
 
     /**
@@ -172,24 +175,24 @@ public class EFXFilter {
         System.out.println("Source played through an auxiliary reverb with lowpass filter");
 
         // Create a lowpass filter, attach it to a reverb effect
-        int filter = createFilter(AL.AL_FILTER_LOWPASS, 1f, 0.5f);
+        int filter = createFilter(ALExt.AL_FILTER_LOWPASS, 1f, 0.5f);
 
         int[] effectslots = new int[1];
-        al.alGenAuxiliaryEffectSlots(1, effectslots, 0);
+        alExt.alGenAuxiliaryEffectSlots(1, effectslots, 0);
         int[] effects = new int[1];
-        al.alGenEffects(1, effects, 0);
-        al.alEffecti(effects[0], AL.AL_EFFECT_TYPE, AL.AL_EFFECT_REVERB);
-        al.alAuxiliaryEffectSloti(effectslots[0], AL.AL_EFFECTSLOT_EFFECT, effects[0]);
+        alExt.alGenEffects(1, effects, 0);
+        alExt.alEffecti(effects[0], ALExt.AL_EFFECT_TYPE, ALExt.AL_EFFECT_REVERB);
+        alExt.alAuxiliaryEffectSloti(effectslots[0], ALExt.AL_EFFECTSLOT_EFFECT, effects[0]);
 
         // Enable Send 0 from the Source to the Auxiliary Effect Slot with filtering
-        al.alSource3i(source, AL.AL_AUXILIARY_SEND_FILTER, effectslots[0], 0, filter);
+        al.alSource3i(source, ALExt.AL_AUXILIARY_SEND_FILTER, effectslots[0], 0, filter);
 
         play(source);
 
         // Cleanup
-        al.alSource3i(source, AL.AL_AUXILIARY_SEND_FILTER, AL.AL_EFFECTSLOT_NULL, 0, AL.AL_FILTER_NULL);
-        al.alDeleteAuxiliaryEffectSlots(1, effectslots, 0);
-        al.alDeleteEffects(1, effects, 0);
+        al.alSource3i(source, ALExt.AL_AUXILIARY_SEND_FILTER, ALExt.AL_EFFECTSLOT_NULL, 0, ALExt.AL_FILTER_NULL);
+        alExt.alDeleteAuxiliaryEffectSlots(1, effectslots, 0);
+        alExt.alDeleteEffects(1, effects, 0);
     }
 
     /**
@@ -231,11 +234,11 @@ public class EFXFilter {
     private static int createFilter(int filtertype, float gain, float gainlimit) {
 
         int filters[] = new int[1];
-        al.alGenFilters(1, filters, 0);
+        alExt.alGenFilters(1, filters, 0);
 
-        al.alFilteri(filters[0], AL.AL_FILTER_TYPE, filtertype);
-        al.alFilterf(filters[0], filtertype, gain);
-        al.alFilterf(filters[0], filtertype, gainlimit);
+        alExt.alFilteri(filters[0], ALExt.AL_FILTER_TYPE, filtertype);
+        alExt.alFilterf(filters[0], filtertype, gain);
+        alExt.alFilterf(filters[0], filtertype, gainlimit);
 
         return filters[0];
     }
@@ -247,6 +250,6 @@ public class EFXFilter {
      */
     private static void deleteFilter(int filter) {
 
-        al.alDeleteFilters(1, new int[]{ filter }, 0);
+        alExt.alDeleteFilters(1, new int[]{ filter }, 0);
     }
 }
