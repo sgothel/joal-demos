@@ -18,6 +18,7 @@ fi
 
 #    -Drootrel.build=build-x86_64 \
 
+# BUILD_ARCHIVE=true \
 ant  \
     -Dtarget.sourcelevel=1.6 \
     -Dtarget.targetlevel=1.6 \

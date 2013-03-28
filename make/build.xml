@@ -10,12 +10,6 @@
    - built into its build directory.
    -->
 <project name="JOAL.demos" default="all">
-    <property name="joal-demos_base_version" value="2.0"/>
-    <tstamp>
-       <format property="version.timestamp" pattern="yyyyMMdd"/>
-    </tstamp>
-    <property name="joal-demos.version" value="${joal-demos_base_version}-${version.timestamp}" />
-
     <property name="project.root"  value=".." />
 
     <condition property="rootrel.build" value="build">
@@ -62,6 +56,8 @@
     </target>
 
     <target name="init" depends="jogamp.env.init, gluegen.cpptasks.detect.os, java.class.path.validate, gluegen.cpptasks.detect.os">
+        <property name="joal-demos.version"  value="${jogamp.version.base}-${version.timestamp}" />
+
         <property name="gluegen-rt.jar"      value="${gluegen.build}/gluegen-rt.jar" />
         <property name="joal.jar"            value="${joal.build}/joal.jar" />
 
