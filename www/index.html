@@ -49,7 +49,7 @@ wget https://jogamp.org/deployment/jogamp-current/archive/jogamp-all-platforms.7
 cd jogamp-all-platforms
 
 # joal-test 
-java -cp jar/joal-test.jar:jar/joal.jar:jar/gluegen-rt.jar com.jogamp.openal.Sound3DTest
+java -cp jar/joal-test.jar:jar/joal.jar:jar/gluegen-rt.jar com.jogamp.openal.test.manual.Sound3DTest
 java -cp jar/joal-test.jar:jar/joal.jar:jar/gluegen-rt.jar com.jogamp.openal.test.manual.OpenALTest
 
 # joal-demos www.devmaster.net Tutorial lession 1,2,3 &amp; 5
@@ -60,15 +60,18 @@ java -cp joal-demos.jar:jar/joal.jar:jar/gluegen-rt.jar demos.devmaster.lesson3.
 java -cp joal-demos.jar:jar/joal.jar:jar/gluegen-rt.jar demos.devmaster.lesson5.SourcesSharingBuffers
 
 # joal-demos www.devmaster.net Tutorial lession 8 
-wget https://jogamp.org/deployment/jogamp-current/joal-demos/jar/j-ogg-oggd.jar
-wget https://jogamp.org/deployment/jogamp-current/joal-demos/jar/j-ogg-vorbisd.jar
-java -cp joal-demos.jar:j-ogg-oggd.jar:jar/joal.jar:jar/gluegen-rt.jar demos.devmaster.lesson8.OggDecoder
-java -cp joal-demos.jar:j-ogg-oggd.jar:jar/joal.jar:jar/gluegen-rt.jar demos.devmaster.lesson8.OggStreamer
+# This demo uses the external J-Ogg library for ogg decoding
+# http://www.j-ogg.de/
+wget http://www.j-ogg.de/j-ogg.zip
+unzip j-ogg.zip
+# ogg Vorbis test stream from http://www.vorbis.com/music/
+wget http://www.vorbis.com/music/Mists_of_Time-4T.ogg
+java -cp joal-demos.jar:j-ogg/build/lib/j-ogg-all.jar:jar/joal.jar:jar/gluegen-rt.jar demos.devmaster.lesson8.OggDecoder Mists_of_Time-4T.ogg
+java -cp joal-demos.jar:j-ogg/build/lib/j-ogg-all.jar:jar/joal.jar:jar/gluegen-rt.jar demos.devmaster.lesson8.OggStreamer Mists_of_Time-4T.ogg
                                                         </pre>
                                                         <H3> JOAL/JOGL test applets </H3>
                                                         <ul>
-                                                            <li><a href="../../deployment/jogamp-current/jogl-demos/applet-gearsjoal.html">JOGL/JOAL Applet test</a></li>
-                                                            <li><a href="../../deployment/jogamp-current/jogl-demos/applet-gearsjoal-launcheronly.html">JOGL/JOAL Applet test (Launcher Only)</a></li>
+                                                            <li><a href="../../deployment/jogamp-current/jogl-demos/applet-gearsjoal-napplet.html">JOGL NApplet GearsJOAL</a></li>
                                                         </ul>
                                                     </div>
                                                 </td>
