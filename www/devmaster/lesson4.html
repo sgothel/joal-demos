@@ -23,20 +23,25 @@ OpenAL Tutorials from DevMaster.net. Reprinted with Permission.<br>
   Maurais<br>
   </a>Adapted for Java by: <a href="mailto:athomas@dev.java.net">Athomas 
   Goldberg </a></p>
-<p align="justify">Up until now we have been letting Alut do all the real tricky 
+<p align="justify">This is a translation of <a href="http://devmaster.net/posts/2891/openal-lesson-4-the-alc">
+OpenAL Lesson 4: The ALC</a>
+tutorial from <a href="http://devmaster.net/">DevMaster.net</a> to JOAL.
+
+</p>
+<p align="justify">Up until now we have been letting ALut do all the real tricky 
   stuff for us. For example handling the audio devices. It's really nice that 
-  the Alut library is there to provide this functionality, but any smart coder 
+  the ALut library is there to provide this functionality, but any smart coder 
   will want to know exactly what their doing. We may want to, at some point, use 
   the Alc directly. In this tutorial we will expose the Alc layer and take a look 
   at how to handle the devices on our own.</p>
 <pre class=code>
-ALFactory.initialize();
 ALC alc = ALFactory.getALC();
 
 
 String deviceName = "DirectSound3D";
+// deviceName = <font color="#0000FF">null</font>; // Passing a null String to alcOpenDevice will open the default device on your system!
 
-ALC.Device device = alc.alcOpenDevice(deviceName);
+ALCdevice device = alc.alcOpenDevice(deviceName);
 </pre>
 <p align="justify">So what is an Alc device? Try to think of it in terms of a 
   resource. OpenAL grabs a handle to the hardware being used, which must in turn 
@@ -48,7 +53,7 @@ ALC.Device device = alc.alcOpenDevice(deviceName);
   to 'alcOpenDevice' is a perfectly valid argument. It forces the Alc to use a 
   default device.</p>
 <pre>
-ALC.Context context = alc.alcCreateContext(device, <font color="#0000FF">null</font>);
+ALCcontext context = alc.alcCreateContext(device, <font color="#0000FF">null</font>);
 alc.alcMakeContextCurrent(context);
 </pre>
 <p align="justify">What is an Alc context? OpenGL coders will recall that there 
@@ -80,10 +85,10 @@ alc.alcMakeContextCurrent(context);
   appropriate context is current. And if you do decide to do this, then there 
   may be times when you want to know exactly which context is current without 
   going through a big check.</p>
-<pre class=code>ALC.Context curContext = alc.alcGetCurrentContext();
+<pre class=code>ALCcontext curContext = alc.alcGetCurrentContext();
 </pre>
 <p>Once you have your context you can also obtain the device in use by that context.</p>
-<pre class=code>ALC.Device curDevice = alc.alcGetContextsDevice(curContext);
+<pre class=code>ALCdevice curDevice = alc.alcGetContextsDevice(curContext);
 </pre>
 <p align="justify">Above we used the context we retrieved to find out which device 
   it was using. There is also one other cool feature that was built into Alc for 
@@ -111,13 +116,13 @@ alc.alcCloseDevice(device);
   There is but a few more Alc functions we have not yet covered.</p>
 <pre class=code><font color="#0000FF">public int</font> alcGetError();
 
-<font color="#0000FF">public</font> <font color="#0000FF">boolean</font> alcIsExtensionPresent(ALC.Device device, String extName);
+<font color="#0000FF">public</font> <font color="#0000FF">boolean</font> alcIsExtensionPresent(ALCdevice device, String extName);
 
-<font color="#0000FF">public</font> <font color="#0000FF">int</font> alcGetEnumValue(ALC.Device device, String enumName);
+<font color="#0000FF">public</font> <font color="#0000FF">int</font> alcGetEnumValue(ALCdevice device, String enumName);
 
-<font color="#0000FF">public </font>String alcGetString(ALC.Device device, <font color="#0000FF">int</font> token);
+<font color="#0000FF">public </font>String alcGetString(ALCdevice device, <font color="#0000FF">int</font> token);
 
-<font color="#0000FF">public</font> <font color="#0000FF">void</font> alcGetIntegerv(ALC.Device device, <font color="#0000FF">int</font> token, <font color="#0000FF">int</font> size, <font color="#0000FF">int</font>[] dest);
+<font color="#0000FF">public</font> <font color="#0000FF">void</font> alcGetIntegerv(ALCdevice device, <font color="#0000FF">int</font> token, <font color="#0000FF">int</font> size, <font color="#0000FF">int</font>[] dest);
 </pre>
 <p align="justify">It may be pretty obvious to you what these do, but lets humour 
   ourselves and have a closer look. First we have 'alcGetError' which is just 
@@ -140,7 +145,7 @@ alc.alcCloseDevice(device);
   exist yet.</p>
 <p align="justify">Well that's most of Alc for you. I hope it gave you a better 
   understanding of how OpenAL interacts with the operation system. You might try 
-  writing your own initialization routines so you can cast off Alut altogether. 
+  writing your own initialization routines so you can cast off ALut altogether. 
   Either way have fun with it.</p>
 <table border="0" cellspacing="1" style="border-collapse: collapse" width="100%" id="AutoNumber2" bgcolor="#666699">
   <tr> 
