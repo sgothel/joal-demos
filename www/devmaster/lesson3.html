@@ -43,9 +43,9 @@ tutorial from <a href="http://devmaster.net/">DevMaster.net</a> to JOAL.
 <font color="#0000FF">import</font> java.nio.ByteBuffer;
 <font color="#0000FF">import</font> java.util.Random;
 
-<font color="#0000FF">import</font> net.java.games.joal.AL;
-<font color="#0000FF">import</font> net.java.games.joal.ALFactory;
-<font color="#0000FF">import</font> net.java.games.joal.util.ALut;
+<font color="#0000FF">import</font> com.jogamp.openal.AL;
+<font color="#0000FF">import</font> com.jogamp.openal.ALFactory;
+<font color="#0000FF">import</font> com.jogamp.openal.util.ALut;
   
 <font color="#0000FF">public</font> <font color="#0000FF">class</font> MultipleSources {
 
@@ -102,7 +102,7 @@ tutorial from <a href="http://devmaster.net/">DevMaster.net</a> to JOAL.
         <font color="#006600">
         // load wav data into buffers</font>
 
-        al.alGenBuffers(NUM_BUFFERS, buffers);
+        al.alGenBuffers(NUM_BUFFERS, buffers, 0);
         <font color="#0000FF">if </font>(al.alGetError() != AL.AL_NO_ERROR) {
             <font color="#0000FF">return</font> AL.AL_FALSE;
         }
@@ -120,7 +120,7 @@ tutorial from <a href="http://devmaster.net/">DevMaster.net</a> to JOAL.
             data[0],
             size[0],
             freq[0]);
-        ALut.alutUnloadWAV(format[0], data[0], size[0], freq[0]);
+<!--        ALut.alutUnloadWAV(format[0], data[0], size[0], freq[0]); -->
 
         ALut.alutLoadWAVFile(
             "wavdata/Gun1.wav",
@@ -135,7 +135,7 @@ tutorial from <a href="http://devmaster.net/">DevMaster.net</a> to JOAL.
             data[0],
             size[0],
             freq[0]);
-        ALut.alutUnloadWAV(format[0], data[0], size[0], freq[0]);
+<!--        ALut.alutUnloadWAV(format[0], data[0], size[0], freq[0]); -->
 
         ALut.alutLoadWAVFile(
             "wavdata/Gun2.wav",
@@ -150,30 +150,30 @@ tutorial from <a href="http://devmaster.net/">DevMaster.net</a> to JOAL.
             data[0],
             size[0],
             freq[0]);
-        ALut.alutUnloadWAV(format[0], data[0], size[0], freq[0]);
+<!--        ALut.alutUnloadWAV(format[0], data[0], size[0], freq[0]); -->
 
 <font color="#006600">        // bind buffers into audio sources</font>
-        al.alGenSources(NUM_SOURCES, sources);
+        al.alGenSources(NUM_SOURCES, sources, 0);
 
         al.alSourcei(sources[BATTLE], AL.AL_BUFFER, buffers[BATTLE]);
         al.alSourcef(sources[BATTLE], AL.AL_PITCH, 1.0f);
         al.alSourcef(sources[BATTLE], AL.AL_GAIN, 1.0f);
-        al.alSourcefv(sources[BATTLE], AL.AL_POSITION, sourcePos[BATTLE]);
-        al.alSourcefv(sources[BATTLE], AL.AL_POSITION, sourceVel[BATTLE]);
+        al.alSourcefv(sources[BATTLE], AL.AL_POSITION, sourcePos[BATTLE], 0);
+        al.alSourcefv(sources[BATTLE], AL.AL_POSITION, sourceVel[BATTLE], 0);
         al.alSourcei(sources[BATTLE], AL.AL_LOOPING, AL.AL_TRUE);
 
         al.alSourcei(sources[GUN1], AL.AL_BUFFER, buffers[GUN1]);
         al.alSourcef(sources[GUN1], AL.AL_PITCH, 1.0f);
         al.alSourcef(sources[GUN1], AL.AL_GAIN, 1.0f);
-        al.alSourcefv(sources[GUN1], AL.AL_POSITION, sourcePos[GUN1]);
-        al.alSourcefv(sources[GUN1], AL.AL_POSITION, sourceVel[GUN1]);
+        al.alSourcefv(sources[GUN1], AL.AL_POSITION, sourcePos[GUN1], 0);
+        al.alSourcefv(sources[GUN1], AL.AL_POSITION, sourceVel[GUN1], 0);
         al.alSourcei(sources[GUN1], AL.AL_LOOPING, AL.AL_FALSE);
 
         al.alSourcei(sources[GUN2], AL.AL_BUFFER, buffers[GUN2]);
         al.alSourcef(sources[GUN2], AL.AL_PITCH, 1.0f);
         al.alSourcef(sources[GUN2], AL.AL_GAIN, 1.0f);
-        al.alSourcefv(sources[GUN2], AL.AL_POSITION, sourcePos[GUN2]);
-        al.alSourcefv(sources[GUN2], AL.AL_POSITION, sourceVel[GUN2]);
+        al.alSourcefv(sources[GUN2], AL.AL_POSITION, sourcePos[GUN2], 0);
+        al.alSourcefv(sources[GUN2], AL.AL_POSITION, sourceVel[GUN2], 0);
         al.alSourcei(sources[GUN2], AL.AL_LOOPING, AL.AL_FALSE);
 
 <font color="#006600">        // do another error check and return</font>
@@ -192,14 +192,14 @@ tutorial from <a href="http://devmaster.net/">DevMaster.net</a> to JOAL.
 <pre>
 
     <font color="#0000FF">static</font> <font color="#0000FF">void</font> setListenerValues() {
-        al.alListenerfv(AL.AL_POSITION, listenerPos);
-        al.alListenerfv(AL.AL_VELOCITY, listenerVel);
-        al.alListenerfv(AL.AL_ORIENTATION, listenerOri);
+        al.alListenerfv(AL.AL_POSITION, listenerPos, 0);
+        al.alListenerfv(AL.AL_VELOCITY, listenerVel, 0);
+        al.alListenerfv(AL.AL_ORIENTATION, listenerOri, 0);
     }
 
     <font color="#0000FF">static</font> <font color="#0000FF">void</font> killAllData() {
-        al.alDeleteBuffers(NUM_BUFFERS, buffers);
-        al.alDeleteSources(NUM_SOURCES, sources);
+        al.alDeleteBuffers(NUM_BUFFERS, buffers, 0);
+        al.alDeleteSources(NUM_SOURCES, sources, 0);
         ALut.alutExit();
     }
 </pre>
@@ -238,7 +238,7 @@ tutorial from <a href="http://devmaster.net/">DevMaster.net</a> to JOAL.
                 // Skip the first source because it is looping anyway (will always be playing).</font>
                 
 				 <font color="#0000FF">int</font> pick = Math.abs((rand.nextInt()) % 2) + 1;
-                al.alGetSourcei(sources[pick], AL.AL_SOURCE_STATE, state);
+                al.alGetSourcei(sources[pick], AL.AL_SOURCE_STATE, state, 0);
 				
                 <font color="#0000FF">if</font> (state[0] != AL.AL_PLAYING) {
 				
@@ -252,7 +252,7 @@ tutorial from <a href="http://devmaster.net/">DevMaster.net</a> to JOAL.
                     al.alSourcefv(
                         sources[pick],
                         AL.AL_POSITION,
-                        sourcePos[pick]);
+                        sourcePos[pick], 0);
 
                     al.alSourcePlay(sources[pick]);
                 }
