@@ -107,7 +107,7 @@
     </target>
 
     <target name="jar" depends="compile" description="Build JOAL demos jar file">
-        <jar destfile="${joal.demos.jar}">
+        <jar manifest="manifest.mf" destfile="${joal.demos.jar}">
             <fileset dir="${classes.dir}" />
             <fileset dir="${src.dir}">
                <include name="demos/data/**" />

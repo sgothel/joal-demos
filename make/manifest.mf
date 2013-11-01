@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Application-Name: Java Bindings for OpenAL Test
+Implementation-Title: Java Bindings for OpenAL Tests
+Implementation-Vendor: JogAmp Community
+Implementation-URL: http://jogamp.org/
+Implementation-Vendor-Id: com.jogamp
