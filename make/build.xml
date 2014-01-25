@@ -59,7 +59,7 @@
         <property name="joal-demos.version"  value="${jogamp.version.base}-${version.timestamp}" />
 
         <property name="gluegen-rt.jar"      value="${gluegen.build}/gluegen-rt.jar" />
-        <property name="joal.jar"            value="${joal.build}/joal.jar" />
+        <property name="joal.jar"            value="${joal.build}/jar/joal.jar" />
 
         <property name="src.dir"             value="../src/java" />
         <property name="classes.dir"         value="${build}/classes" />
