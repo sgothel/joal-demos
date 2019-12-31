@@ -16,12 +16,13 @@ if [ -z "$ANT_PATH" ] ; then
     exit
 fi
 
+export SOURCE_LEVEL=1.8
+export TARGET_LEVEL=1.8
+export TARGET_RT_JAR=/opt-share/jre1.8.0_212/lib/rt.jar
+
 #    -Drootrel.build=build-x86_64 \
 
 # BUILD_ARCHIVE=true \
 ant  \
-    -Dtarget.sourcelevel=1.6 \
-    -Dtarget.targetlevel=1.6 \
-    -Dtarget.rt.jar=/opt-share/jre1.6.0_30/lib/rt.jar \
     -Drootrel.build=build-x86_64 \
     $* 2>&1 | tee make.joal-demos.all.linux-x86_64.log
