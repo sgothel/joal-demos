@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="maven/trivial/src/test/java"/>
+	<classpathentry kind="src" path="src/java"/>
+	<classpathentry kind="lib" path="build-x86_64/joal-demos.jar"/>
+	<classpathentry kind="lib" path="build-x86_64/j-ogg-oggd.jar"/>
+	<classpathentry kind="lib" path="build-x86_64/j-ogg-vorbisd.jar"/>
+	<classpathentry kind="output" path="build-x86_64/classes"/>
+</classpath>
