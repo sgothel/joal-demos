@@ -8,5 +8,5 @@ fi
 
 # BUILD_ARCHIVE=true \
 ant  \
-    -Drootrel.build=build-x86_64 \
-    $* 2>&1 | tee make.joal-demos.all.linux-x86_64.log
+    -Drootrel.build=build-freebsd-x86_64 \
+    $* 2>&1 | tee make.joal-demos.all.freebsd-x86_64.log
